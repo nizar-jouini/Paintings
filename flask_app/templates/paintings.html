@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Red Belt</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="d-flex justify-content-between align-items-center col-12">
+        <h1 class="text-center">Welcome {{ logged_user.first_name }} {{ logged_user.last_name }}!</h1>
+        <div class="d-flex col-4 justify-content-around">
+            <a href="/paintings/new"><u>Add Painting</u></a>
+            <a href="/logout" class="btn btn-info">Logout</a>
+        </div>
+    </nav>
+    <div class="col-8 mx-auto">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Painting</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for painting in paintings %}
+                    <tr>
+                        <td>
+                            <a href="/paintings/{{ painting.id }}" class="col-5"><u>{{ painting.title }}</u></a>
+                            <span> by {{ painting.user.first_name }} {{ painting.user.last_name }}</span>
+                            {% if painting.user_id == logged_user.id %}
+                                <a href="/paintings/delete/{{painting.id}}" class="col-3 mx-3"><u>Delete</u></a>
+                                <a href="/paintings/{{painting.id}}/edit" class="col-3 mx-3"><u>Edit</u></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
